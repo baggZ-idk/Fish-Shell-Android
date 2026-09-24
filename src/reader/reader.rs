@@ -6355,10 +6355,16 @@ fn check_for_orphaned_process(loop_count: usize, shell_pgid: NullablePid) -> boo
     // Try reading from the tty; if we get EIO we are orphaned. This is sort of bad because it
     // may block.
     if !we_think_we_are_orphaned && loop_count % 128 == 0 {
-        unsafe extern "C" {
-            unsafe fn ctermid(buf: *mut c_char) -> *mut c_char;
-        }
-        let tty = unsafe { ctermid(std::ptr::null_mut()) };
+        #[cfg(target_os = "android")]
+        let tty = c"/dev/tty".as_ptr();
+
+        #[cfg(not(target_os = "android"))]
+        let tty = unsafe {
+            unsafe extern "C" {
+                unsafe fn ctermid(buf: *mut c_char) -> *mut c_char;
+            }
+            ctermid(std::ptr::null_mut())
+        };
         if tty.is_null() {
             perror("ctermid");
             exit_without_destructors(1);

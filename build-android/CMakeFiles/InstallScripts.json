@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/baggz/Downloads/fish-shell/build-android/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

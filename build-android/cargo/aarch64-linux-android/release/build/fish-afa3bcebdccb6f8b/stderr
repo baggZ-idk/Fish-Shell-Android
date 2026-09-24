@@ -1,0 +1,24 @@
+cd "/home/baggz/Downloads/fish-shell/build-android/cargo/aarch64-linux-android/release/build/fish-afa3bcebdccb6f8b/out/.rsconf-4164634673" && LC_ALL="C" "/opt/android-sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang" "-O3" "-DANDROID" "-ffunction-sections" "-fdata-sections" "-fPIC" "-Wall" "-Wextra" "/home/baggz/Downloads/fish-shell/build-android/cargo/aarch64-linux-android/release/build/fish-afa3bcebdccb6f8b/out/.rsconf-4164634673/sys_eventfd_h-test-0.c" "-o" "/home/baggz/Downloads/fish-shell/build-android/cargo/aarch64-linux-android/release/build/fish-afa3bcebdccb6f8b/out/.rsconf-4164634673/sys_eventfd_h-test-1.o" "-c"
+#include <sys/eventfd.h>
+
+int main() {
+	return 0;
+}
+
+cd "/home/baggz/Downloads/fish-shell/build-android/cargo/aarch64-linux-android/release/build/fish-afa3bcebdccb6f8b/out/.rsconf-4164634673" && LC_ALL="C" "/opt/android-sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android24-clang" "-O3" "-DANDROID" "-ffunction-sections" "-fdata-sections" "-fPIC" "-Wall" "-Wextra" "/home/baggz/Downloads/fish-shell/build-android/cargo/aarch64-linux-android/release/build/fish-afa3bcebdccb6f8b/out/.rsconf-4164634673/localeconv_l-test-2.c" "-o" "/home/baggz/Downloads/fish-shell/build-android/cargo/aarch64-linux-android/release/build/fish-afa3bcebdccb6f8b/out/.rsconf-4164634673/localeconv_l-test-3.out"
+#include <stddef.h>
+
+extern int localeconv_l;
+
+int main() {
+	// Try to get the address of the symbol to make sure linking is required.
+	void *addr = &localeconv_l;
+	return (int)(size_t)(addr);
+}
+
+ld.lld: error: undefined symbol: localeconv_l
+>>> referenced by localeconv_l-test-2.c
+>>>               /tmp/localeconv_l-test-2-cd4165.o:(main)
+>>> referenced by localeconv_l-test-2.c
+>>>               /tmp/localeconv_l-test-2-cd4165.o:(main)
+clang: error: linker command failed with exit code 1 (use -v to see invocation)

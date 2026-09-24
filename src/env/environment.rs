@@ -1,3 +1,8 @@
+#[cfg(target_os = "android")]
+use libc::__system_property_get;
+
+use std::os::unix::ffi::OsStrExt;
+
 use super::r#impl::environment::{
     EnvMutex, EnvMutexGuard, EnvScopedImpl, EnvStackImpl, ModResult, UVAR_SCOPE_IS_GLOBAL,
     colon_split, uvars,
@@ -557,33 +562,46 @@ fn setup_user(global_exported_mode: EnvSetMode, vars: &EnvStack) {
 }
 
 pub(crate) static FALLBACK_PATH: LazyLock<&[WString]> = LazyLock::new(|| {
-    // _CS_PATH: colon-separated paths to find POSIX utilities. Same as USER_CS_PATH.
-    // Fix until rust-lang/libc#4956 is merged
-    cfg_if::cfg_if!(
-        if #[cfg(target_os = "illumos")] {
-            // See https://github.com/illumos/illumos-gate/blob/af641d205ecf080be0d900f89c4f3d2adb84f33f/usr/src/uts/common/sys/unistd.h#L50
-            let cs_path: c_int = 65;
-        } else {
-            let cs_path = libc::_CS_PATH;
-        }
-    );
+    #[cfg(target_os = "android")]
+    {
+        return Box::leak(
+            vec![
+                L!("/system/bin").to_owned(),
+                L!("/system/xbin").to_owned(),
+                L!("/vendor/bin").to_owned(),
+                L!("/product/bin").to_owned(),
+                L!("/data/local/tmp").to_owned(),
+            ]
+            .into_boxed_slice(),
+        );
+    }
 
-    let buf_size = unsafe { libc::confstr(cs_path, std::ptr::null_mut(), 0) };
-    let paths: Vec<WString> = if buf_size > 0 {
-        let mut buf = vec![b'\0' as libc::c_char; buf_size];
-        unsafe { libc::confstr(cs_path, buf.as_mut_ptr(), buf_size) };
-        let buf = buf;
-        // safety: buf should contain a null-byte, and is not mutable unless we move ownership
-        let cstr = unsafe { CStr::from_ptr(buf.as_ptr()) };
-        colon_split(&[cstr2wcstring(cstr)])
-    } else {
-        vec![
-            str2wcstring(PREFIX) + L!("/bin"),
-            L!("/usr/bin").to_owned(),
-            L!("/bin").to_owned(),
-        ]
-    };
-    Box::leak(paths.into_boxed_slice())
+    #[cfg(not(target_os = "android"))]
+    {
+        // _CS_PATH: colon-separated paths to find POSIX utilities.
+        cfg_if::cfg_if!(
+            if #[cfg(target_os = "illumos")] {
+                let cs_path: c_int = 65;
+            } else {
+                let cs_path = libc::_CS_PATH;
+            }
+        );
+
+        let buf_size = unsafe { libc::confstr(cs_path, std::ptr::null_mut(), 0) };
+        let paths: Vec<WString> = if buf_size > 0 {
+            let mut buf = vec![b'\0' as libc::c_char; buf_size];
+            unsafe { libc::confstr(cs_path, buf.as_mut_ptr(), buf_size) };
+            let cstr = unsafe { CStr::from_ptr(buf.as_ptr()) };
+            colon_split(&[cstr2wcstring(cstr)])
+        } else {
+            vec![
+                str2wcstring(PREFIX) + L!("/bin"),
+                L!("/usr/bin").to_owned(),
+                L!("/bin").to_owned(),
+            ]
+        };
+        Box::leak(paths.into_boxed_slice())
+    }
 });
 
 /// Make sure the PATH variable contains something.
@@ -694,8 +712,26 @@ pub fn env_init(paths: Option<&ConfigPaths>, no_config: bool) {
     vars.set_one(L!("fish_pid"), global_mode, getpid().as_raw().to_wstring());
 
     // Set the $hostname variable
-    let hostname: WString = gethostname().map_or("fish".into(), osstr2wcstring);
-    vars.set_one(L!("hostname"), global_mode, hostname);
+    let hostname: WString = if cfg!(target_os = "android") {
+    let mut value = [0u8; 92];
+
+    let len = unsafe {
+        libc::__system_property_get(
+            b"ro.product.device\0".as_ptr() as *const libc::c_char,
+            value.as_mut_ptr() as *mut libc::c_char,
+        )
+    };
+
+    if len > 0 {
+        let value = String::from_utf8_lossy(&value[..len as usize]);
+        WString::from(value.as_ref())
+    } else {
+        gethostname().map_or("fish".into(), osstr2wcstring)
+    }
+} else {
+    gethostname().map_or("fish".into(), osstr2wcstring)
+};
+vars.set_one(L!("hostname"), global_mode, hostname);
 
     // Set up SHLVL variable. Not we can't use vars.get() because SHLVL is read-only, and therefore
     // was not inherited from the environment.

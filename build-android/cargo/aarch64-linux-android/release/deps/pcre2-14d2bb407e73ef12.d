@@ -1,0 +1,13 @@
+/home/baggz/Downloads/fish-shell/build-android/cargo/aarch64-linux-android/release/deps/pcre2-14d2bb407e73ef12.d: /home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/lib.rs /home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/bytes.rs /home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/error.rs /home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/ffi.rs /home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/pool.rs /home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/regex_impl.rs /home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/utf32.rs
+
+/home/baggz/Downloads/fish-shell/build-android/cargo/aarch64-linux-android/release/deps/libpcre2-14d2bb407e73ef12.rlib: /home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/lib.rs /home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/bytes.rs /home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/error.rs /home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/ffi.rs /home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/pool.rs /home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/regex_impl.rs /home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/utf32.rs
+
+/home/baggz/Downloads/fish-shell/build-android/cargo/aarch64-linux-android/release/deps/libpcre2-14d2bb407e73ef12.rmeta: /home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/lib.rs /home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/bytes.rs /home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/error.rs /home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/ffi.rs /home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/pool.rs /home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/regex_impl.rs /home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/utf32.rs
+
+/home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/lib.rs:
+/home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/bytes.rs:
+/home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/error.rs:
+/home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/ffi.rs:
+/home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/pool.rs:
+/home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/regex_impl.rs:
+/home/baggz/.cargo/git/checkouts/rust-pcre2-cea4c3ff42e4f4e4/85b7afb/src/utf32.rs:

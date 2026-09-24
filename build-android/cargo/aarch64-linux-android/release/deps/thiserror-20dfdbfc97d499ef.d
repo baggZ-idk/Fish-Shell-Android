@@ -1,0 +1,14 @@
+/home/baggz/Downloads/fish-shell/build-android/cargo/aarch64-linux-android/release/deps/thiserror-20dfdbfc97d499ef.d: /home/baggz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/lib.rs /home/baggz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/aserror.rs /home/baggz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/display.rs /home/baggz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/var.rs /home/baggz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/private.rs /home/baggz/Downloads/fish-shell/build-android/cargo/aarch64-linux-android/release/build/thiserror-656b8c1798cdc696/out/private.rs
+
+/home/baggz/Downloads/fish-shell/build-android/cargo/aarch64-linux-android/release/deps/libthiserror-20dfdbfc97d499ef.rlib: /home/baggz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/lib.rs /home/baggz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/aserror.rs /home/baggz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/display.rs /home/baggz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/var.rs /home/baggz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/private.rs /home/baggz/Downloads/fish-shell/build-android/cargo/aarch64-linux-android/release/build/thiserror-656b8c1798cdc696/out/private.rs
+
+/home/baggz/Downloads/fish-shell/build-android/cargo/aarch64-linux-android/release/deps/libthiserror-20dfdbfc97d499ef.rmeta: /home/baggz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/lib.rs /home/baggz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/aserror.rs /home/baggz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/display.rs /home/baggz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/var.rs /home/baggz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/private.rs /home/baggz/Downloads/fish-shell/build-android/cargo/aarch64-linux-android/release/build/thiserror-656b8c1798cdc696/out/private.rs
+
+/home/baggz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/lib.rs:
+/home/baggz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/aserror.rs:
+/home/baggz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/display.rs:
+/home/baggz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/var.rs:
+/home/baggz/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.18/src/private.rs:
+/home/baggz/Downloads/fish-shell/build-android/cargo/aarch64-linux-android/release/build/thiserror-656b8c1798cdc696/out/private.rs:
+
+# env-dep:OUT_DIR=/home/baggz/Downloads/fish-shell/build-android/cargo/aarch64-linux-android/release/build/thiserror-656b8c1798cdc696/out

@@ -704,11 +704,9 @@ pub fn path_remoteness(path: &wstr) -> DirRemoteness {
                     #[allow(clippy::useless_conversion)]
                     let flags = buf.f_flag as u64;
                     #[allow(clippy::unnecessary_cast)]
-                    if flags & (libc::MNT_LOCAL as u64) != 0 {
-                        DirRemoteness::Local
-                    } else {
-                        DirRemoteness::Remote
-                    }
+                    DirRemoteness::Unknown
+                } else if #[cfg(target_os = "android")] {
+                    DirRemoteness::Unknown
                 } else {
                     let mut buf = std::mem::MaybeUninit::uninit();
                     if unsafe { libc::statfs(narrow.as_ptr(), buf.as_mut_ptr()) } < 0 {
