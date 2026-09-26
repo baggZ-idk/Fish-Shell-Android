@@ -95,6 +95,8 @@ struct FishCmdOpts {
     is_interactive_session: bool,
     /// Whether to enable private mode.
     enable_private_mode: bool,
+    /// Whether to restart as root on Android.
+    root: bool,
 }
 
 /// Return a timeval converted to milliseconds.
@@ -218,7 +220,7 @@ fn fish_parse_opt(args: &mut [WString], opts: &mut FishCmdOpts) -> ControlFlow<i
     const PRINT_DEBUG_CATEGORIES_ARG: char = 2 as char;
     const PROFILE_STARTUP_ARG: char = 3 as char;
 
-    const SHORT_OPTS: &wstr = L!("+hPilNnvc:C:p:d:f:D:o:");
+    const SHORT_OPTS: &wstr = L!("+hPilNnvc:C:p:d:f:D:o:r");
     const LONG_OPTS: &[WOption<'static>] = &[
         wopt(L!("command"), RequiredArgument, 'c'),
         wopt(L!("init-command"), RequiredArgument, 'C'),
@@ -227,6 +229,7 @@ fn fish_parse_opt(args: &mut [WString], opts: &mut FishCmdOpts) -> ControlFlow<i
         wopt(L!("debug-output"), RequiredArgument, 'o'),
         wopt(L!("debug-stack-frames"), RequiredArgument, 'D'),
         wopt(L!("interactive"), NoArgument, 'i'),
+        wopt(L!("root"), NoArgument, 'r'),
         wopt(L!("login"), NoArgument, 'l'),
         wopt(L!("no-config"), NoArgument, 'N'),
         wopt(L!("no-execute"), NoArgument, 'n'),
@@ -265,6 +268,7 @@ fn fish_parse_opt(args: &mut [WString], opts: &mut FishCmdOpts) -> ControlFlow<i
             'f' => opts.features = w.woptarg.unwrap().to_owned(),
             'h' => opts.batch_cmds.push("__fish_print_help fish".into()),
             'i' => opts.is_interactive_session = true,
+            'r' => opts.root = true,
             'l' => opts.is_login = true,
             'N' => {
                 opts.no_config = true;
@@ -367,6 +371,42 @@ fn main() {
     }
 }
 
+#[cfg(target_os = "android")]
+fn restart_as_root(args: &[WString]) -> ! {
+    use std::process::Command;
+
+    let exe = env::current_exe().expect("failed to get fish executable path");
+
+    let root_args = args
+        .iter()
+        .skip(1)
+        .filter(|arg| *arg != L!("-r") && *arg != L!("--root"))
+        .collect::<Vec<_>>();
+
+    let mut command = format!(
+        "export HOME=/data/local/tmp; export XDG_CONFIG_HOME=/data/local/tmp/fish-home/.config; exec {}",
+        exe.to_string_lossy()
+    );
+
+    for arg in root_args {
+        command.push(' ');
+        command.push_str(
+            &escape_single_quoted_hack_hack_hack_hack(arg)
+                .to_string_lossy(),
+        );
+    }
+
+    let status = Command::new("su")
+        .arg("0")
+        .arg("-i")
+        .arg("-c")
+        .arg(command)
+        .status()
+        .expect("failed to execute su");
+
+    std::process::exit(status.code().unwrap_or(1));
+}
+
 fn throwing_main() -> i32 {
     let mut res = Err(STATUS_CMD_ERROR);
 
@@ -395,6 +435,17 @@ fn throwing_main() -> i32 {
         ControlFlow::Continue(optind) => optind,
         ControlFlow::Break(status) => return status,
     };
+
+    #[cfg(target_os = "android")]
+    if opts.root {
+        restart_as_root(&args);
+    }
+
+    #[cfg(target_os = "android")]
+    unsafe {
+        std::env::set_var("HOME", "/sdcard");
+        std::env::set_var("XDG_CONFIG_HOME", "/data/local/tmp/fish-home/.config");
+    }
 
     // Direct any debug output right away.
     // --debug-output takes precedence, otherwise $FISH_DEBUG_OUTPUT is used.
